@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %} Image {% endblock %}
+
+{% block body %}
+    <div class="navbar">
+        <ul>
+            <li><a href="./home">Home</a></li>
+            <li><a href="/image" class="active">Image</a></li>
+            <li><a href="/video">Video</a></li>
+            <li><a href="/webcam">Webcam</a></li>
+            <li><a href="/analysis">Analysis</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <div class="left-panel">
+            <h2>Select a file to upload</h2>
+            <form method="post" action="/image" enctype="multipart/form-data">
+				<dl>
+					<p>
+                        <input type="file" name="file" accept=".png, .jpg, .jpeg, .gif" required><br><br>
+						only upload .png, .jpg, .jpeg, .gif files
+                    </p>
+                </dl>
+                <p>
+					<button class="imgbutton" type="submit" value="Submit"> Submit </button>
+                </p>
+            </form>
+        </div>
+        <div class="right-panel">
+            <div class="placeholder">
+				<p>
+					{% with messages = get_flashed_messages() %}
+						{% if messages %}
+							<ul>
+								{% for message in messages %}
+									<li>{{ message }}</li>
+								{% endfor %}
+							</ul>
+						{% endif %}
+					{% endwith %}
+				</p>
+				{% if filename %}
+					<div class="img">
+						<img class="samimg" src="{{ url_for('display_image', filename=filename) }}" alt="Uploaded Image">
+					</div>
+				{% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
